@@ -1,0 +1,35 @@
+name: Generate EPG
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every two days (days 1, 3, 5, …)
+    - cron: "0 0 */2 * *"
+  workflow_dispatch: # allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Run EPG generator
+        run: python generate_epg.py
+
+      - name: Commit and push updated epg.xml.gz
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add epg.xml.gz
+          # Only commit when the file actually changed
+          git diff --cached --quiet || git commit -m "chore: update epg.xml.gz [skip ci]"
+          git push
