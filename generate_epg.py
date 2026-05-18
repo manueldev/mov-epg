@@ -196,8 +196,8 @@ def generate_xmltv(channels, all_programmes):
 
 def main():
     today = datetime.date.today()
-    yesterday = today - datetime.timedelta(days=0)
-    tomorrow = today + datetime.timedelta(days=0)
+    yesterday = today - datetime.timedelta(days=1)
+    tomorrow = today + datetime.timedelta(days=1)
     
     start_dt = datetime.datetime(yesterday.year, yesterday.month, yesterday.day, 0, 0, 0)
     start_ts = int(start_dt.timestamp())
