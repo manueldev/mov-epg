@@ -96,7 +96,7 @@ def get_schedule_data(all_channel_pids, start_ts, end_ts):
     print(f"URL: {url}")
     
     try:
-response = requests.get(url, timeout=30)
+        response = requests.get(url, timeout=30)
         print(f"--- RESPONSE STATUS: {response.status_code} ---")
         response.raise_for_status()
         data = response.json()
